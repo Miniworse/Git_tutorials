@@ -67,18 +67,52 @@ git push -u origin master
 
 ## 更多命令
 
+首先要明确几个不同的工作状态，简单来说：  
+工作区：所有修改发生在工作区，工作区的改动未被 Git 跟踪，需手动添加到暂存区；  
+暂存区：一个中间过渡区域，临时存放你准备提交的改动；  
+版本库：Git 的永久存储区域，保存所有提交的历史记录。  
+
+>工作区 -(git add)-> 暂存区 -(git commit)-> 版本库
+
+
+```
+git add #修改从工作区放到暂存区
+git restore #撤销工作区修改
+```
+
+```
+git commit #暂存区到版本库
+git restore --staged 文件名 #撤销暂存区状态，修改返回工作区
+```
+
+每次 `git commit` 会生成一个带唯一哈希的版本,也可以用标签来表示每个在版本库中的版本
+
+```
+git tag v1.0
+git tag -a v1.0 -m "message" #标签添加注释
+git tag -d v1.0 #撕掉标签
+```
+
+`status`可以观察当前修改所处的状态
+```
+git status
+```
+
 以下命令可以查看历次提交记录，在后面添加`--pretty=oneline`可以让显示更加简洁。
 ```
 git log
 ```
 
-调取前一份档案，如果是两份则`HEAD^^`或者`HEAD~数字`
+调取之前的档案，则采用`reset`命令，有三种工作方式包括`--hard``--soft``--mixed`，也可以用哈希值或者标签指定。
 
 ```
-git reset --hard HEAD^
+git reset --hard HEAD^ #调取前一份档案
+git reset --hard HEAD^^ #调取两次之前的档案
+git reset --hard HEAD~20 #调取20次之前的档案
 ```
 
-```
-git status
-```
+`reflog`记录了所有的调动记录：
 
+```
+git reflog
+```
